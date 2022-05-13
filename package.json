@@ -29,7 +29,6 @@
   },
   "homepage": "https://github.com/bytenode/bytenode#readme",
   "devDependencies": {
-    "electron": "^17.2.0",
     "mocha": "^9.2.2"
   }
 }

@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-const electron = require('electron');
+const electron = require("electron");
 
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow } = require("electron");
 
 let okHTML = `
 <h1>Hello World!</h1>
@@ -17,36 +17,36 @@ let noHTML = `
 let mainWindow;
 
 function createWindow() {
+  mainWindow = new BrowserWindow({
+    width: 800,
+    height: 600,
+    webPreferences: { preload: `${__dirname}/preload.js`, nodeIntegration: true, contextIsolation: false },
+  });
 
-  mainWindow = new BrowserWindow({ width: 800, height: 600, webPreferences: { nodeIntegration: true } });
-
-  mainWindow.loadFile('index.html');
+  mainWindow.loadFile("index.html");
 
   setTimeout(function () {
     if (Date.now() > 1234567891000) {
-
-      mainWindow.webContents.send('set-html', noHTML);
+      mainWindow.webContents.send("set-html", noHTML);
     } else {
-      mainWindow.webContents.send('set-html', okHTML);
+      mainWindow.webContents.send("set-html", okHTML);
     }
   }, 1000);
 
-  mainWindow.on('close', _ => {
+  mainWindow.on("close", (_) => {
     mainWindow = null;
   });
 }
 
-app.on('ready', createWindow);
+app.on("ready", createWindow);
 
-app.on('window-all-closed', _ => {
-
-  if (process.platform !== 'darwin') {
+app.on("window-all-closed", (_) => {
+  if (process.platform !== "darwin") {
     app.quit();
   }
 });
 
-app.on('activate', _ => {
-
+app.on("activate", (_) => {
   if (mainWindow === null) {
     createWindow();
   }
